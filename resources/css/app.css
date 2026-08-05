@@ -1,0 +1,128 @@
+@import "bootstrap/dist/css/bootstrap.min.css";
+@import "bootstrap-icons/font/bootstrap-icons.css";
+@import "tailwindcss";
+
+:root {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif;
+
+    --primary: #89c28b;
+    --primary-light: #4CAF50;
+    --secondary: #81C784;
+    --bg: #F4FBF5;
+    --card: #FFFFFF;
+    --border: #DDEEDF;
+    --text: #2E3A2F;
+}
+
+body{
+    font-family: var(--font-sans);
+    background: var(--bg);
+    color: var(--text);
+}
+
+/* Navbar */
+.navbar{
+    background: linear-gradient(90deg,#8dda91,#a4dda7)!important;
+    box-shadow:0 5px 20px rgba(0,0,0,.08);
+}
+
+.navbar .nav-link,
+.navbar-brand{
+    color:white!important;
+}
+
+.navbar .nav-link:hover{
+    opacity:.8;
+}
+
+/* Card */
+.card{
+    border:none;
+    border-radius:16px;
+    box-shadow:0 10px 25px rgba(0,0,0,.06);
+}
+
+/* Table */
+.table{
+    background:white;
+    border-radius:15px;
+    overflow:hidden;
+}
+
+.table thead{
+    background:#E8F5E9;
+}
+
+.table thead th{
+    color:#90c593;
+    border:none;
+    font-weight:600;
+}
+
+.table tbody tr:hover{
+    background:#F1F8F4;
+}
+
+/* Buttons */
+.btn-primary{
+    background:#81b684;
+    border:none;
+}
+
+.btn-primary:hover{
+    background:#91db94;
+}
+
+.btn-warning{
+    background:#66BB6A;
+    border:none;
+    color:white;
+}
+
+.btn-warning:hover{
+    background:#80cc82;
+    color:white;
+}
+
+.btn-danger{
+    border:none;
+    background:#EF5350;
+}
+
+.btn-danger:hover{
+    background:#E53935;
+}
+
+/* Form */
+.form-control{
+    border-radius:12px;
+    border:1px solid #D7EAD9;
+}
+
+.form-control:focus{
+    border-color:#66BB6A;
+    box-shadow:0 0 0 .2rem rgba(76,175,80,.15);
+}
+
+/* Pagination */
+.pagination .page-link{
+    color:#94ec99;
+}
+
+.pagination .active .page-link{
+    background:#92dd96;
+    border-color:#84cc88;
+}
+
+/* Alert */
+.alert-success{
+    border:none;
+    border-radius:12px;
+}
+
+/* Page Title */
+h1{
+    font-weight:700;
+    color:#a1d4a3;
+    margin-bottom:25px;
+}
