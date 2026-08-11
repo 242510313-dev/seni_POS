@@ -55,7 +55,11 @@
             <td>{{$sale->metode_pembayaran}}</td>
             <td>{{$sale->status}}</td>
             <td class="d-flex gap-1">
-                <a href="" class="btn btn-primary">Detail</a>
+
+            <a href="{{ route('penjualan.show', $sale) }}" class="btn btn-primary">
+    Detail
+</a>
+                
                 @can('view', $sale)
                 ||
                 <a href="{{ route('penjualan.edit', $sale) }}" class="btn btn-warning">Edit</a>

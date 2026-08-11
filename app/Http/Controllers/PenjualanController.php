@@ -85,10 +85,15 @@ return view('penjualan.pos', compact('sale', 'products', 'mode'));
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-        //
-    }
+    public function show(Penjualan $penjualan)
+{
+    $penjualan->load([
+        'user',
+        'itemPenjualan.produk'
+    ]);
+
+    return view('penjualan.show', compact('penjualan'));
+}
 
     /**
      * Show the form for editing the specified resource.

@@ -6,6 +6,7 @@ use App\Http\Requests\Produk\StoreRequest;
 use App\Http\Requests\Produk\UpdateRequest;
 use App\Http\Requests\SearchRequest;
 use App\Models\Produk;
+use App\Models\ItemPenjualan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -87,17 +88,15 @@ return redirect()->route('produk.index')
     $dataReq = $request->validated();
 
     $data = [
-        'user_id'     => Auth::id(),
-        'nama'        => $dataReq['name'],
-        'harga_beli'  => $dataReq['purchase_price'],
-        'harga_jual'  => $dataReq['selling_price'],
-        'stok'        => $dataReq['stock'] ?? 0,
+        'user_id' => Auth::id(),
+        'nama' => $dataReq['name'],
+        'harga_beli' => $dataReq['purchase_price'],
+        'harga_jual' => $dataReq['selling_price'],
+        'stok' => $dataReq['stock'] ?? 0,
     ];
 
-    // Jika upload foto baru
     if ($request->hasFile('foto')) {
 
-        // Hapus foto lama
         if (
             $produk->foto &&
             Storage::disk('public')->exists($produk->foto)
@@ -105,15 +104,39 @@ return redirect()->route('produk.index')
             Storage::disk('public')->delete($produk->foto);
         }
 
-        // Simpan foto baru
         $data['foto'] = $request->file('foto')
             ->store('products', 'public');
     }
 
-    // Update data produk
     $produk->update($data);
 
     return redirect()->route('produk.index')
         ->with('success', 'Product updated successfully.');
+}
+
+
+/**
+ * Remove the specified resource from storage.
+ */
+public function destroy(Produk $produk)
+{
+    if ($produk->itemPenjualan()->exists()) {
+        return redirect()
+            ->route('produk.index')
+            ->with('errors', 'Produk tidak dapat dihapus karena sudah digunakan dalam transaksi.');
+    }
+
+    if (
+        $produk->foto &&
+        Storage::disk('public')->exists($produk->foto)
+    ) {
+        Storage::disk('public')->delete($produk->foto);
+    }
+
+    $produk->delete();
+
+    return redirect()
+        ->route('produk.index')
+        ->with('success', 'Produk berhasil dihapus.');
 }
 }
