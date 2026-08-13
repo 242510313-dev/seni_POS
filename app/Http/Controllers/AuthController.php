@@ -11,9 +11,13 @@ class AuthController extends Controller
 {
     public function index()
     {
+        // Jika user sudah login, langsung alihkan ke dashboard
+        if (Auth::check()) {
+            return redirect()->route('dashboard');
+        }
+
         return view('login');
     }
-
 
     public function auth(LoginRequest $request)
     {
@@ -28,15 +32,15 @@ class AuthController extends Controller
             'email' => 'Email atau password tidak valid',
         ]);
     }
-        public function logout(Request $request)
-        {
-            Auth::logout();
-    
-            $request->session()->invalidate();
-            $request->session()->regenerateToken();
-    
-            return redirect()->route('login')
-                ->with('success', 'Anda telah berhasil logout.');
-        }
 
+    public function logout(Request $request)
+    {
+        Auth::logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->route('login')
+            ->with('success', 'Anda telah berhasil logout.');
+    }
 }

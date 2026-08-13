@@ -7,32 +7,39 @@ use App\Http\Controllers\ItemPenjualanController;
 use App\Http\Controllers\PenjualanController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\JenisController; // <-- Tambahkan Import JenisController
 
-
-
-// route yang bisa diakses ketika user belum login
+// Route yang bisa diakses ketika user belum login
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'index'])->name('login');
     Route::post('/auth', [AuthController::class, 'auth'])->name('auth');
 });
 
-// route yang bisa diakses ketika user sudah login
+// Route yang bisa diakses ketika user sudah login
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
- Route::middleware('role:admin')->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/users', [UserController::class, 'index'])->name('users');
-    Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
-    Route::post('/users/store', [UserController::class, 'store'])->name('users.store');
-    Route::get('/users/edit/{user}', [UserController::class, 'edit'])->name('users.edit');
-    Route::post('/users/update/{user}', [UserController::class, 'update'])->name('users.update');
-    Route::delete('/users/destroy/{user}', [UserController::class, 'destroy'])->name('users.destroy');
-});
+    // Route untuk Halaman Tentang (Ditambahkan di sini agar bisa diakses Admin & Kasir)
+    Route::get('/tentang', function () {
+        return view('tentang'); // Mengarahkan ke file resources/views/tentang.blade.php
+    })->name('tentang');
 
-Route::middleware('role:admin,kasir')->group(function () {
-    Route::resource('/produk', ProdukController::class);
-    Route::resource('/penjualan', PenjualanController::class);
-    Route::resource('/itempenjualan', ItemPenjualanController::class);
-});
+    Route::middleware('role:admin')->prefix('admin')->name('admin.')->group(function () {
+        Route::get('/users', [UserController::class, 'index'])->name('users');
+        Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
+        Route::post('/users/store', [UserController::class, 'store'])->name('users.store');
+        Route::get('/users/edit/{user}', [UserController::class, 'edit'])->name('users.edit');
+        Route::post('/users/update/{user}', [UserController::class, 'update'])->name('users.update');
+        Route::delete('/users/destroy/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+    }); 
+
+    Route::middleware('role:admin,kasir')->group(function () {
+        Route::resource('/produk', ProdukController::class);
+        Route::resource('/penjualan', PenjualanController::class);
+        Route::resource('/itempenjualan', ItemPenjualanController::class);
+        
+        // <-- Tambahkan Route Resource Jenis di sini
+        Route::resource('/jenis', JenisController::class); 
+    });
 });
