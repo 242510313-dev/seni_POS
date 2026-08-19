@@ -2,7 +2,7 @@
     <div class="container">
 
         <a class="navbar-brand fw-bold text-white" href="{{ route('dashboard') }}">
-            🌿 POS
+           Midori Bakery  🥐  🍵
         </a>
 
         <button class="navbar-toggler bg-white"
@@ -44,12 +44,6 @@
                     </a>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link text-white {{ Request::is('tentang*') ? 'fw-bold' : '' }}"
-                       href="{{ route('tentang') }}">
-                        Tentang
-                    </a>
-                </li>
 
                 <li class="nav-item">
                     <a class="nav-link text-white {{ Request::is('jenis*') ? 'fw-bold' : '' }}"
@@ -57,6 +51,14 @@
                         Jenis
                     </a>
                 </li>
+
+                <li class="nav-item">
+                    <a class="nav-link text-white {{ Request::is('tentang*') ? 'fw-bold' : '' }}"
+                       href="{{ route('tentang') }}">
+                        Tentang
+                    </a>
+                </li>
+
 
             </ul>
 

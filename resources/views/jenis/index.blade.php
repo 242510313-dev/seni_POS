@@ -1,12 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
+
+@include('layouts.navbar')
 <div class="container mt-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h2>Daftar Jenis Produk</h2>
-        <button type="button" class="btn btn-success fw-bold" data-bs-toggle="modal" data-bs-target="#modalTambahJenis">
-            + Tambah Jenis
-        </button>
+        <button type="button" class="btn btn-tambah-jenis fw-bold" data-bs-toggle="modal" data-bs-target="#modalTambahJenis">
+    + Tambah Jenis
+</button>
     </div>
 
     @if(session('success'))
@@ -102,7 +104,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-success">Simpan</button>
+                    <button type="submit" class="btn btn-tambah-jenis fw-bold">Simpan</button>
                 </div>
             </form>
         </div>

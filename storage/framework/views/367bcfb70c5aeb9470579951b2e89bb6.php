@@ -2,7 +2,7 @@
     <div class="container">
 
         <a class="navbar-brand fw-bold text-white" href="<?php echo e(route('dashboard')); ?>">
-            🌿 POS
+           Midori Bakery  🥐  🍵
         </a>
 
         <button class="navbar-toggler bg-white"
@@ -44,12 +44,6 @@
                     </a>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link text-white <?php echo e(Request::is('tentang*') ? 'fw-bold' : ''); ?>"
-                       href="<?php echo e(route('tentang')); ?>">
-                        Tentang
-                    </a>
-                </li>
 
                 <li class="nav-item">
                     <a class="nav-link text-white <?php echo e(Request::is('jenis*') ? 'fw-bold' : ''); ?>"
@@ -57,6 +51,14 @@
                         Jenis
                     </a>
                 </li>
+
+                <li class="nav-item">
+                    <a class="nav-link text-white <?php echo e(Request::is('tentang*') ? 'fw-bold' : ''); ?>"
+                       href="<?php echo e(route('tentang')); ?>">
+                        Tentang
+                    </a>
+                </li>
+
 
             </ul>
 

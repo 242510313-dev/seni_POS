@@ -85,8 +85,81 @@
     </tbody>
 </table>
 
-<?php echo e($sales->links()); ?>
+<div class="d-flex justify-content-between align-items-center mt-4">
 
+    <div class="text-muted small">
+        Menampilkan
+        <strong><?php echo e($sales->firstItem() ?? 0); ?></strong>
+        -
+        <strong><?php echo e($sales->lastItem() ?? 0); ?></strong>
+        dari
+        <strong><?php echo e($sales->total()); ?></strong>
+        user
+    </div>
+
+    <?php if($sales->hasPages()): ?>
+        <nav aria-label="Pagination">
+            <ul class="pagination mb-0">
+
+                
+                <?php if($sales->onFirstPage()): ?>
+                    <li class="page-item disabled">
+                        <span class="page-link">
+                            <i class="bi bi-chevron-left"></i>
+                        </span>
+                    </li>
+                <?php else: ?>
+                    <li class="page-item">
+                        <a class="page-link"
+                           href="<?php echo e($sales->previousPageUrl()); ?>">
+                            <i class="bi bi-chevron-left"></i>
+                        </a>
+                    </li>
+                <?php endif; ?>
+
+                
+                <?php $__currentLoopData = $sales->getUrlRange(1,$sales->lastPage()); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $page => $url): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+
+                    <?php if($page == $sales->currentPage()): ?>
+                        <li class="page-item active">
+                            <span class="page-link">
+                                <?php echo e($page); ?>
+
+                            </span>
+                        </li>
+                    <?php else: ?>
+                        <li class="page-item">
+                            <a class="page-link"
+                               href="<?php echo e($url); ?>">
+                                <?php echo e($page); ?>
+
+                            </a>
+                        </li>
+                    <?php endif; ?>
+
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+                
+                <?php if($sales->hasMorePages()): ?>
+                    <li class="page-item">
+                        <a class="page-link"
+                           href="<?php echo e($sales->nextPageUrl()); ?>">
+                            <i class="bi bi-chevron-right"></i>
+                        </a>
+                    </li>
+                <?php else: ?>
+                    <li class="page-item disabled">
+                        <span class="page-link">
+                            <i class="bi bi-chevron-right"></i>
+                        </span>
+                    </li>
+                <?php endif; ?>
+
+            </ul>
+        </nav>
+    <?php endif; ?>
+
+</div>
 
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\laragon\www\seni_POS\resources\views/penjualan/index.blade.php ENDPATH**/ ?>

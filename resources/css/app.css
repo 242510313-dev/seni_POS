@@ -1,128 +1,697 @@
+
 @import "bootstrap/dist/css/bootstrap.min.css";
 @import "bootstrap-icons/font/bootstrap-icons.css";
-@import "tailwindcss";
 
 :root {
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif;
 
-    --primary: #89c28b;
-    --primary-light: #4CAF50;
-    --secondary: #81C784;
-    --bg: #F4FBF5;
+    /* =========================
+       SOFT MIDORI GREEN PALETTE
+    ========================= */
+
+    --primary: #8FBC92;
+    --primary-light: #A8CFA9;
+    --secondary: #A9D1AA;
+
+    --bg: #F5FAF5;
     --card: #FFFFFF;
-    --border: #DDEEDF;
-    --text: #2E3A2F;
+    --border: #DCEBDD;
+
+    --text: #344536;
+    --text-light: #6F8071;
+
+    --green-dark: #5F9163;
+    --green-soft: #E8F3E8;
+    --green-hover: #7FAF82;
 }
 
-body{
+
+/* =========================
+   BODY
+========================= */
+
+body {
     font-family: var(--font-sans);
     background: var(--bg);
     color: var(--text);
 }
 
-/* Navbar */
-.navbar{
-    background: linear-gradient(90deg,#8dda91,#a4dda7)!important;
-    box-shadow:0 5px 20px rgba(0,0,0,.08);
+
+/* =========================
+   NAVBAR
+========================= */
+
+.navbar {
+    background: linear-gradient(
+        90deg,
+        #A8D5AA,
+        #9BCB9E
+    ) !important;
+
+    box-shadow: 0 5px 20px rgba(70, 110, 75, 0.10);
 }
 
 .navbar .nav-link,
-.navbar-brand{
-    color:white!important;
+.navbar-brand {
+    color: #ffffff !important;
 }
 
-.navbar .nav-link:hover{
-    opacity:.8;
+.navbar .nav-link {
+    transition: all 0.2s ease;
 }
 
-/* Card */
-.card{
-    border:none;
-    border-radius:16px;
-    box-shadow:0 10px 25px rgba(0,0,0,.06);
+.navbar .nav-link:hover {
+    color: #F8FFF8 !important;
+    opacity: 0.85;
 }
 
-/* Table */
-.table{
-    background:white;
-    border-radius:15px;
-    overflow:hidden;
+
+/* =========================
+   CARD
+========================= */
+
+.card {
+    border: 1px solid #E4EFE4;
+    border-radius: 16px;
+    background: var(--card);
+
+    box-shadow:
+        0 8px 25px rgba(65, 105, 70, 0.06);
 }
 
-.table thead{
-    background:#E8F5E9;
+
+/* =========================
+   TABLE
+========================= */
+
+.table {
+    background: #FFFFFF;
+    border-radius: 15px;
+    overflow: hidden;
 }
 
-.table thead th{
-    color:#90c593;
-    border:none;
-    font-weight:600;
+.table thead {
+    background: #E8F3E8;
 }
 
-.table tbody tr:hover{
-    background:#F1F8F4;
+.table thead th {
+    color: #5F8962;
+    border: none;
+    font-weight: 600;
 }
 
-/* Buttons */
-.btn-primary{
-    background:#81b684;
-    border:none;
+.table tbody tr {
+    transition: background 0.2s ease;
 }
 
-.btn-primary:hover{
-    background:#91db94;
+.table tbody tr:hover {
+    background: #F2F8F2;
 }
 
-.btn-warning{
-    background:#66BB6A;
-    border:none;
-    color:white;
+
+/* =========================
+   BUTTONS
+========================= */
+
+.btn-primary {
+    background: #8FBC92;
+    border: none;
+    color: #FFFFFF;
+    border-radius: 10px;
 }
 
-.btn-warning:hover{
-    background:#80cc82;
-    color:white;
+.btn-primary:hover {
+    background: #7FAF82;
+    color: #FFFFFF;
 }
 
-.btn-danger{
-    border:none;
-    background:#EF5350;
+.btn-warning {
+    background: #A8CFA9;
+    border: none;
+    color: #3F6042;
+    border-radius: 10px;
 }
 
-.btn-danger:hover{
-    background:#E53935;
+.btn-warning:hover {
+    background: #94C296;
+    color: #355437;
 }
 
-/* Form */
-.form-control{
-    border-radius:12px;
-    border:1px solid #D7EAD9;
+.btn-danger {
+    border: none;
+    background: #D98282;
+    border-radius: 10px;
 }
 
-.form-control:focus{
-    border-color:#66BB6A;
-    box-shadow:0 0 0 .2rem rgba(76,175,80,.15);
+.btn-danger:hover {
+    background: #C96E6E;
 }
 
-/* Pagination */
-.pagination .page-link{
-    color:#94ec99;
+
+/* =========================
+   FORM
+========================= */
+
+.form-control {
+    border-radius: 12px;
+    border: 1px solid #D6E6D7;
+    color: var(--text);
 }
 
-.pagination .active .page-link{
-    background:#92dd96;
-    border-color:#84cc88;
+.form-control::placeholder {
+    color: #A1B0A2;
 }
 
-/* Alert */
-.alert-success{
-    border:none;
-    border-radius:12px;
+.form-control:focus {
+    border-color: #8FBC92;
+
+    box-shadow:
+        0 0 0 .2rem rgba(143, 188, 146, 0.18);
 }
 
-/* Page Title */
-h1{
-    font-weight:700;
-    color:#a1d4a3;
-    margin-bottom:25px;
+
+/* =========================
+   PAGINATION
+========================= */
+
+.pagination {
+    margin-bottom: 0;
+    gap: 5px;
 }
+
+.pagination .page-item {
+    margin: 0;
+}
+
+.pagination .page-link {
+    color: #668B69;
+    border: 1px solid #DCEBDD;
+    border-radius: 8px !important;
+    padding: 7px 12px;
+    background: #FFFFFF;
+}
+
+.pagination .page-link:hover {
+    color: #527856;
+    background: #F0F7F0;
+    border-color: #A9CEA9;
+}
+
+.pagination .active .page-link {
+    background: #8FBC92;
+    border-color: #8FBC92;
+    color: #FFFFFF;
+}
+
+.pagination .disabled .page-link {
+    color: #B5C4B6;
+    background: #F8FBF8;
+    border-color: #E5EEE5;
+}
+
+
+/* =========================
+   ALERT
+========================= */
+
+.alert-success {
+    border: none;
+    border-radius: 12px;
+
+    background: #E8F3E8;
+    color: #557A58;
+}
+
+
+/* =========================
+   PAGE TITLE
+========================= */
+
+h1 {
+    font-weight: 700;
+    color: #5D8A61;
+    margin-bottom: 25px;
+}
+
+h2,
+h3,
+h4,
+h5 {
+    color: #557D58;
+}
+
+
+/* =========================
+   TEXT MUTED
+========================= */
+
+.text-muted {
+    color: #788A79 !important;
+}
+
+
+/* =========================
+   LINKS
+========================= */
+
+a {
+    color: #648D67;
+}
+
+a:hover {
+    color: #4F7653;
+}
+
+
+/* =========================
+   BADGE
+========================= */
+
+.badge.bg-success {
+    background-color: #8FBC92 !important;
+}
+
+.badge.bg-primary {
+    background-color: #8FBC92 !important;
+}
+
+
+/* =========================
+   HR
+========================= */
+
+hr {
+    border-color: #E0ECE1;
+    opacity: 1;
+}
+
+@import "bootstrap/dist/css/bootstrap.min.css";
+@import "bootstrap-icons/font/bootstrap-icons.css";
+
+:root {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif;
+
+    /* =========================
+       SOFT MIDORI GREEN PALETTE
+    ========================= */
+
+    --primary: #8FBC92;
+    --primary-light: #A8CFA9;
+    --secondary: #A9D1AA;
+
+    --bg: #F5FAF5;
+    --card: #FFFFFF;
+    --border: #DCEBDD;
+
+    --text: #344536;
+    --text-light: #6F8071;
+
+    --green-dark: #5F9163;
+    --green-soft: #E8F3E8;
+    --green-hover: #7FAF82;
+}
+
+
+/* =========================
+   BODY
+========================= */
+
+body {
+    font-family: var(--font-sans);
+    background: var(--bg);
+    color: var(--text);
+}
+
+
+/* =========================
+   NAVBAR
+========================= */
+
+.navbar {
+    background: linear-gradient(
+        90deg,
+        #A8D5AA,
+        #9BCB9E
+    ) !important;
+
+    box-shadow: 0 5px 20px rgba(70, 110, 75, 0.10);
+}
+
+.navbar .nav-link,
+.navbar-brand {
+    color: #ffffff !important;
+}
+
+.navbar .nav-link {
+    transition: all 0.2s ease;
+}
+
+.navbar .nav-link:hover {
+    color: #F8FFF8 !important;
+    opacity: 0.85;
+}
+
+
+/* =========================
+   CARD
+========================= */
+
+.card {
+    border: 1px solid #E4EFE4;
+    border-radius: 16px;
+    background: var(--card);
+
+    box-shadow:
+        0 8px 25px rgba(65, 105, 70, 0.06);
+}
+
+
+/* =========================
+   TABLE
+========================= */
+
+.table {
+    background: #FFFFFF;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.table thead {
+    background: #E8F3E8;
+}
+
+.table thead th {
+    color: #5F8962;
+    border: none;
+    font-weight: 600;
+}
+
+.table tbody tr {
+    transition: background 0.2s ease;
+}
+
+.table tbody tr:hover {
+    background: #F2F8F2;
+}
+
+
+/* =========================
+   BUTTONS
+========================= */
+
+.btn-primary {
+    background: #8FBC92;
+    border: none;
+    color: #FFFFFF;
+    border-radius: 10px;
+}
+
+.btn-primary:hover {
+    background: #7FAF82;
+    color: #FFFFFF;
+}
+
+.btn-warning {
+    background: #A8CFA9;
+    border: none;
+    color: #3F6042;
+    border-radius: 10px;
+}
+
+.btn-warning:hover {
+    background: #94C296;
+    color: #355437;
+}
+
+.btn-danger {
+    border: none;
+    background: #D98282;
+    border-radius: 10px;
+}
+
+.btn-danger:hover {
+    background: #C96E6E;
+}
+
+
+/* =========================
+   FORM
+========================= */
+
+.form-control {
+    border-radius: 12px;
+    border: 1px solid #D6E6D7;
+    color: var(--text);
+}
+
+.form-control::placeholder {
+    color: #A1B0A2;
+}
+
+.form-control:focus {
+    border-color: #8FBC92;
+
+    box-shadow:
+        0 0 0 .2rem rgba(143, 188, 146, 0.18);
+}
+
+
+/* =========================
+   PAGINATION
+========================= */
+
+.pagination {
+    margin-bottom: 0;
+    gap: 5px;
+}
+
+.pagination .page-item {
+    margin: 0;
+}
+
+.pagination .page-link {
+    color: #668B69;
+    border: 1px solid #DCEBDD;
+    border-radius: 8px !important;
+    padding: 7px 12px;
+    background: #FFFFFF;
+}
+
+.pagination .page-link:hover {
+    color: #527856;
+    background: #F0F7F0;
+    border-color: #A9CEA9;
+}
+
+.pagination .active .page-link {
+    background: #8FBC92;
+    border-color: #8FBC92;
+    color: #FFFFFF;
+}
+
+.pagination .disabled .page-link {
+    color: #B5C4B6;
+    background: #F8FBF8;
+    border-color: #E5EEE5;
+}
+
+
+/* =========================
+   ALERT
+========================= */
+
+.alert-success {
+    border: none;
+    border-radius: 12px;
+
+    background: #E8F3E8;
+    color: #557A58;
+}
+
+
+/* =========================
+   PAGE TITLE
+========================= */
+
+h1 {
+    font-weight: 700;
+    color: #5D8A61;
+    margin-bottom: 25px;
+}
+
+h2,
+h3,
+h4,
+h5 {
+    color: #557D58;
+}
+
+
+/* =========================
+   TEXT MUTED
+========================= */
+
+.text-muted {
+    color: #788A79 !important;
+}
+
+
+/* =========================
+   LINKS
+========================= */
+
+a {
+    color: #648D67;
+}
+
+a:hover {
+    color: #4F7653;
+}
+
+
+/* =========================
+   BADGE
+========================= */
+
+.badge.bg-success {
+    background-color: #8FBC92 !important;
+}
+
+.badge.bg-primary {
+    background-color: #8FBC92 !important;
+}
+
+
+/* =========================
+   HR
+========================= */
+
+hr {
+    border-color: #E0ECE1;
+    opacity: 1;
+}
+
+/* =========================
+   TAMBAH JENIS - SOFT GREEN
+========================= */
+
+.btn-tambah-jenis {
+    background: #9BC5A0 !important;
+    border: none !important;
+    color: #ffffff !important;
+    border-radius: 10px;
+    padding: 8px 18px;
+    transition: all 0.2s ease;
+}
+
+.btn-tambah-jenis:hover {
+    background: #86B58C !important;
+    color: #ffffff !important;
+    transform: translateY(-1px);
+}
+
+
+/* Header Modal Tambah Jenis */
+.modal-header-soft {
+    background: #A8CFA9 !important;
+    border-bottom: none;
+}
+
+.modal-header-soft .modal-title {
+    color: #ffffff;
+}
+
+
+/* Tombol Batal */
+.modal-footer .btn-secondary {
+    background: #E4EDE4;
+    border: none;
+    color: #607362;
+}
+
+.modal-footer .btn-secondary:hover {
+    background: #D5E3D6;
+    color: #4E6351;
+}
+
+/* =========================
+   USERS - SOFT GREEN
+========================= */
+
+/* Judul Users */
+.users-title {
+    color: #5D8A61 !important;
+}
+
+/* Icon Users */
+.users-title i {
+    color: #8FBC92;
+}
+
+
+/* =========================
+   TOMBOL SOFT GREEN
+========================= */
+
+.btn-soft-green {
+    background: #9BC5A0 !important;
+    border: none !important;
+    color: #FFFFFF !important;
+    transition: all 0.2s ease;
+}
+
+.btn-soft-green:hover {
+    background: #86B58C !important;
+    color: #FFFFFF !important;
+}
+
+
+/* Icon pencarian */
+.search-icon {
+    color: #7FAF82;
+}
+
+
+/* =========================
+   TOMBOL HAPUS
+========================= */
+
+.btn-soft-danger {
+    background: #D99A9A !important;
+    border: none !important;
+    color: #FFFFFF !important;
+    transition: all 0.2s ease;
+}
+
+.btn-soft-danger:hover {
+    background: #C98585 !important;
+    color: #FFFFFF !important;
+}
+
+
+/* =========================
+   BADGE ADMIN
+========================= */
+
+.badge-soft-green {
+    background: #A8CFA9 !important;
+    color: #416246 !important;
+}
+
+
+/* Badge Kasir */
+.badge-soft-gray {
+    background: #E3EBE3 !important;
+    color: #647465 !important;
+}
+
+
+/* =========================
+   ICON EMPTY DATA
+========================= */
+
+.empty-icon {
+    color: #9BC5A0;
+}
+
+

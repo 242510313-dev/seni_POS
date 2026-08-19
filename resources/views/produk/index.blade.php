@@ -86,9 +86,79 @@
   <div>
     Showing {{ $products->firstItem() }} to {{ $products->lastItem() }} of {{ $products->total() }} results
   </div>
-  <div>
-    {{ $products->links() }}
-  </div>
+  <div class="d-flex justify-content-between align-items-center mt-4">
+
+    <div class="text-muted small">
+        Menampilkan
+        <strong>{{$products->firstItem() ?? 0 }}</strong>
+        -
+        <strong>{{ $products->lastItem() ?? 0 }}</strong>
+        dari
+        <strong>{{ $products->total() }}</strong>
+        products
+    </div>
+
+    @if ($products->hasPages())
+        <nav aria-label="Pagination">
+            <ul class="pagination mb-0">
+
+                {{-- Previous --}}
+                @if ($products->onFirstPage())
+                    <li class="page-item disabled">
+                        <span class="page-link">
+                            <i class="bi bi-chevron-left"></i>
+                        </span>
+                    </li>
+                @else
+                    <li class="page-item">
+                        <a class="page-link"
+                           href="{{ $products->previousPageUrl() }}">
+                            <i class="bi bi-chevron-left"></i>
+                        </a>
+                    </li>
+                @endif
+
+                {{-- Nomor halaman --}}
+                @foreach ($products->getUrlRange(1, $products->lastPage()) as $page => $url)
+
+                    @if ($page == $products->currentPage())
+                        <li class="page-item active">
+                            <span class="page-link">
+                                {{ $page }}
+                            </span>
+                        </li>
+                    @else
+                        <li class="page-item">
+                            <a class="page-link"
+                               href="{{ $url }}">
+                                {{ $page }}
+                            </a>
+                        </li>
+                    @endif
+
+                @endforeach
+
+                {{-- Next --}}
+                @if ($products->hasMorePages())
+                    <li class="page-item">
+                        <a class="page-link"
+                           href="{{ $products->nextPageUrl() }}">
+                            <i class="bi bi-chevron-right"></i>
+                        </a>
+                    </li>
+                @else
+                    <li class="page-item disabled">
+                        <span class="page-link">
+                            <i class="bi bi-chevron-right"></i>
+                        </span>
+                    </li>
+                @endif
+
+            </ul>
+        </nav>
+    @endif
+
+</div>
 </div>
 
 @endsection

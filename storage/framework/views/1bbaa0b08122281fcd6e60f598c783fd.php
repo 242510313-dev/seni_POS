@@ -86,10 +86,81 @@
   <div>
     Showing <?php echo e($products->firstItem()); ?> to <?php echo e($products->lastItem()); ?> of <?php echo e($products->total()); ?> results
   </div>
-  <div>
-    <?php echo e($products->links()); ?>
+  <div class="d-flex justify-content-between align-items-center mt-4">
 
-  </div>
+    <div class="text-muted small">
+        Menampilkan
+        <strong><?php echo e($products->firstItem() ?? 0); ?></strong>
+        -
+        <strong><?php echo e($products->lastItem() ?? 0); ?></strong>
+        dari
+        <strong><?php echo e($products->total()); ?></strong>
+        products
+    </div>
+
+    <?php if($products->hasPages()): ?>
+        <nav aria-label="Pagination">
+            <ul class="pagination mb-0">
+
+                
+                <?php if($products->onFirstPage()): ?>
+                    <li class="page-item disabled">
+                        <span class="page-link">
+                            <i class="bi bi-chevron-left"></i>
+                        </span>
+                    </li>
+                <?php else: ?>
+                    <li class="page-item">
+                        <a class="page-link"
+                           href="<?php echo e($products->previousPageUrl()); ?>">
+                            <i class="bi bi-chevron-left"></i>
+                        </a>
+                    </li>
+                <?php endif; ?>
+
+                
+                <?php $__currentLoopData = $products->getUrlRange(1, $products->lastPage()); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $page => $url): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+
+                    <?php if($page == $products->currentPage()): ?>
+                        <li class="page-item active">
+                            <span class="page-link">
+                                <?php echo e($page); ?>
+
+                            </span>
+                        </li>
+                    <?php else: ?>
+                        <li class="page-item">
+                            <a class="page-link"
+                               href="<?php echo e($url); ?>">
+                                <?php echo e($page); ?>
+
+                            </a>
+                        </li>
+                    <?php endif; ?>
+
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+                
+                <?php if($products->hasMorePages()): ?>
+                    <li class="page-item">
+                        <a class="page-link"
+                           href="<?php echo e($products->nextPageUrl()); ?>">
+                            <i class="bi bi-chevron-right"></i>
+                        </a>
+                    </li>
+                <?php else: ?>
+                    <li class="page-item disabled">
+                        <span class="page-link">
+                            <i class="bi bi-chevron-right"></i>
+                        </span>
+                    </li>
+                <?php endif; ?>
+
+            </ul>
+        </nav>
+    <?php endif; ?>
+
+</div>
 </div>
 
 <?php $__env->stopSection(); ?>

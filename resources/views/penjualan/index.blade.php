@@ -84,6 +84,78 @@
     </tbody>
 </table>
 
-{{ $sales->links() }}
+<div class="d-flex justify-content-between align-items-center mt-4">
+
+    <div class="text-muted small">
+        Menampilkan
+        <strong>{{ $sales->firstItem() ?? 0 }}</strong>
+        -
+        <strong>{{ $sales->lastItem() ?? 0 }}</strong>
+        dari
+        <strong>{{ $sales->total() }}</strong>
+        user
+    </div>
+
+    @if ($sales->hasPages())
+        <nav aria-label="Pagination">
+            <ul class="pagination mb-0">
+
+                {{-- Previous --}}
+                @if ($sales->onFirstPage())
+                    <li class="page-item disabled">
+                        <span class="page-link">
+                            <i class="bi bi-chevron-left"></i>
+                        </span>
+                    </li>
+                @else
+                    <li class="page-item">
+                        <a class="page-link"
+                           href="{{ $sales->previousPageUrl() }}">
+                            <i class="bi bi-chevron-left"></i>
+                        </a>
+                    </li>
+                @endif
+
+                {{-- Nomor halaman --}}
+                @foreach ($sales->getUrlRange(1,$sales->lastPage()) as $page => $url)
+
+                    @if ($page == $sales->currentPage())
+                        <li class="page-item active">
+                            <span class="page-link">
+                                {{ $page }}
+                            </span>
+                        </li>
+                    @else
+                        <li class="page-item">
+                            <a class="page-link"
+                               href="{{ $url }}">
+                                {{ $page }}
+                            </a>
+                        </li>
+                    @endif
+
+                @endforeach
+
+                {{-- Next --}}
+                @if ($sales->hasMorePages())
+                    <li class="page-item">
+                        <a class="page-link"
+                           href="{{ $sales->nextPageUrl() }}">
+                            <i class="bi bi-chevron-right"></i>
+                        </a>
+                    </li>
+                @else
+                    <li class="page-item disabled">
+                        <span class="page-link">
+                            <i class="bi bi-chevron-right"></i>
+                        </span>
+                    </li>
+                @endif
+
+            </ul>
+        </nav>
+    @endif
+
+</div>
 
 @endsection
