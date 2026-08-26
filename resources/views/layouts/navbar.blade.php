@@ -1,77 +1,329 @@
-<nav class="navbar navbar-expand-lg shadow-sm" style="background:#2E7D32;">
-    <div class="container">
+<style>
+    .custom-navbar {
+        background: #2E7D32;
+        border-radius: 24px;
+        margin: 18px auto 30px;
+        padding: 10px 18px;
+        box-shadow: 0 8px 25px rgba(46, 125, 50, 0.18);
+    }
 
-        <a class="navbar-brand fw-bold text-white" href="{{ route('dashboard') }}">
-           Midori Bakery  🥐  🍵
+    .custom-navbar .navbar-brand {
+        color: #ffffff !important;
+        font-weight: 700;
+        font-size: 17px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        white-space: nowrap;
+    }
+
+    .brand-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: #ffffff;
+        color: #2E7D32;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        font-size: 20px;
+    }
+
+    .brand-text {
+        line-height: 1.1;
+    }
+
+    .brand-subtitle {
+        display: block;
+        font-size: 10px;
+        font-weight: 500;
+        opacity: .8;
+        margin-top: 2px;
+    }
+
+    .custom-navbar .navbar-nav {
+        gap: 5px;
+    }
+
+    .custom-navbar .nav-link {
+        color: #ffffff !important;
+        border-radius: 25px;
+        padding: 10px 15px !important;
+
+        font-size: 14px;
+        font-weight: 500;
+
+        transition: all .2s ease;
+    }
+
+    .custom-navbar .nav-link:hover {
+        background: rgba(255, 255, 255, .18);
+    }
+
+    .custom-navbar .nav-link.active,
+    .custom-navbar .nav-link.fw-bold {
+        background: #ffffff;
+        color: #2E7D32 !important;
+        font-weight: 700 !important;
+    }
+
+    .navbar-user {
+        background: rgba(255, 255, 255, .16);
+        color: #ffffff;
+
+        border-radius: 25px;
+        padding: 9px 15px;
+
+        font-size: 13px;
+        font-weight: 600;
+
+        white-space: nowrap;
+    }
+
+    .logout-btn {
+        border: none;
+        border-radius: 25px;
+
+        background: #ffffff;
+        color: #2E7D32;
+
+        padding: 10px 18px;
+
+        font-size: 14px;
+        font-weight: 700;
+
+        transition: all .2s ease;
+    }
+
+    .logout-btn:hover {
+        background: #f1f8f2;
+        color: #2E7D32;
+        transform: translateY(-1px);
+    }
+
+    .navbar-toggler {
+        border: none;
+        border-radius: 10px;
+        padding: 7px 10px;
+    }
+
+    .navbar-toggler:focus {
+        box-shadow: none;
+    }
+
+    @media (max-width: 991px) {
+
+        .custom-navbar {
+            margin: 12px 12px 25px;
+            border-radius: 18px;
+        }
+
+        .custom-navbar .navbar-collapse {
+            padding-top: 15px;
+        }
+
+        .custom-navbar .navbar-nav {
+            gap: 3px;
+        }
+
+        .custom-navbar .nav-link {
+            padding: 10px 13px !important;
+        }
+
+        .navbar-user {
+            display: inline-block;
+            margin-top: 12px;
+        }
+
+        .logout-btn {
+            margin-top: 12px;
+            width: 100%;
+        }
+    }
+</style>
+
+
+<nav class="navbar navbar-expand-lg custom-navbar">
+
+    <div class="container-fluid">
+
+        {{-- =========================
+             BRAND
+        ========================= --}}
+        <a class="navbar-brand"
+           href="{{ route('dashboard') }}">
+
+            <span class="brand-icon">
+                🥐
+            </span>
+
+            <span class="brand-text">
+                Midori Bakery
+                <span class="brand-subtitle">
+                    Bakery & Tea
+                </span>
+            </span>
+
         </a>
 
+
+        {{-- =========================
+             MOBILE TOGGLE
+        ========================= --}}
         <button class="navbar-toggler bg-white"
                 type="button"
                 data-bs-toggle="collapse"
-                data-bs-target="#navbarNav">
+                data-bs-target="#navbarNav"
+                aria-controls="navbarNav"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
+
             <span class="navbar-toggler-icon"></span>
+
         </button>
 
-        <div class="collapse navbar-collapse" id="navbarNav">
 
-            <ul class="navbar-nav ms-4">
+        <div class="collapse navbar-collapse"
+             id="navbarNav">
 
+
+            {{-- =========================
+                 MENU
+            ========================= --}}
+            <ul class="navbar-nav ms-lg-4 mt-3 mt-lg-0">
+
+                {{-- DASHBOARD --}}
                 <li class="nav-item">
-                    <a class="nav-link text-white {{ Request::is('dashboard') ? 'fw-bold' : '' }}"
+
+                    <a class="nav-link
+                        {{ Request::is('dashboard') ? 'fw-bold' : '' }}"
                        href="{{ route('dashboard') }}">
+
+                        <i class="bi bi-speedometer2 me-1"></i>
                         Dashboard
+
                     </a>
+
                 </li>
 
+
+                {{-- USERS --}}
                 <li class="nav-item">
-                    <a class="nav-link text-white {{ Request::is('admin/users') ? 'fw-bold' : '' }}"
+
+                    <a class="nav-link
+                        {{ Request::is('admin/users') ? 'fw-bold' : '' }}"
                        href="{{ route('admin.users') }}">
+
+                        <i class="bi bi-people-fill me-1"></i>
                         Users
-                    </a>
-                </li>
 
-                <li class="nav-item">
-                    <a class="nav-link text-white {{ Request::is('produk*') ? 'fw-bold' : '' }}"
-                       href="{{ route('produk.index') }}">
-                        Produk
                     </a>
-                </li>
 
-                <li class="nav-item">
-                    <a class="nav-link text-white {{ Request::is('penjualan*') ? 'fw-bold' : '' }}"
-                       href="{{ route('penjualan.index') }}">
-                        Penjualan
-                    </a>
                 </li>
 
 
+                {{-- JENIS --}}
                 <li class="nav-item">
-                    <a class="nav-link text-white {{ Request::is('jenis*') ? 'fw-bold' : '' }}"
+
+                    <a class="nav-link
+                        {{ Request::is('jenis*') ? 'fw-bold' : '' }}"
                        href="{{ route('jenis.index') }}">
+
+                        <i class="bi bi-tags-fill me-1"></i>
                         Jenis
+
                     </a>
+
                 </li>
 
+
+                {{-- PRODUK --}}
                 <li class="nav-item">
-                    <a class="nav-link text-white {{ Request::is('tentang*') ? 'fw-bold' : '' }}"
-                       href="{{ route('tentang') }}">
-                        Tentang
+
+                    <a class="nav-link
+                        {{ Request::is('produk*') ? 'fw-bold' : '' }}"
+                       href="{{ route('produk.index') }}">
+
+                        <i class="bi bi-box-seam-fill me-1"></i>
+                        Produk
+
                     </a>
+
                 </li>
 
+
+                {{-- PENJUALAN --}}
+                <li class="nav-item">
+
+                    <a class="nav-link
+                        {{ Request::is('penjualan*') ? 'fw-bold' : '' }}"
+                       href="{{ route('penjualan.index') }}">
+
+                        <i class="bi bi-cart-check-fill me-1"></i>
+                        Penjualan
+
+                    </a>
+
+                </li>
+
+
+                {{-- TENTANG --}}
+                <li class="nav-item">
+
+                    <a class="nav-link
+                        {{ Request::is('tentang*') ? 'fw-bold' : '' }}"
+                       href="{{ route('tentang') }}">
+
+                        <i class="bi bi-info-circle-fill me-1"></i>
+                        Tentang
+
+                    </a>
+
+                </li>
 
             </ul>
 
-            <form class="ms-auto"
-                  action="{{ route('logout') }}"
-                  method="POST">
-                @csrf
-                <button class="btn btn-light text-success fw-bold">
-                    Logout
-                </button>
-            </form>
+
+            {{-- =========================
+                 RIGHT SIDE
+            ========================= --}}
+            <div class="ms-lg-auto d-flex flex-column flex-lg-row align-items-lg-center gap-2 mt-3 mt-lg-0">
+
+                @auth
+
+                    <div class="navbar-user">
+
+                        <i class="bi bi-person-circle me-1"></i>
+
+                        Hai, {{ auth()->user()->name }}
+
+                    </div>
+
+                @endauth
+
+
+                <form action="{{ route('logout') }}"
+                      method="POST"
+                      class="m-0">
+
+                    @csrf
+
+                    <button type="submit"
+                            class="logout-btn">
+
+                        <i class="bi bi-box-arrow-right me-1"></i>
+                        Logout
+
+                    </button>
+
+                </form>
+
+            </div>
 
         </div>
 
     </div>
+
 </nav>

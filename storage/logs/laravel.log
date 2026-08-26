@@ -4534,3 +4534,19 @@
 #62 C:/laragon/www/seni_POS/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('C://laragon//www//...')
 #63 {main}
 "} 
+[2026-08-26 04:21:39] local.ERROR: There are no commands defined in the "storagr" namespace.
+
+Did you mean this?
+    storage {"exception":"[object] (Symfony\\Component\\Console\\Exception\\NamespaceNotFoundException(code: 0): There are no commands defined in the \"storagr\" namespace.
+
+Did you mean this?
+    storage at C:/laragon/www/seni_POS/vendor/symfony/console/Application.php:694)
+[stacktrace]
+#0 C:/laragon/www/seni_POS/vendor/symfony/console/Application.php(743): Symfony/Component/Console/Application->findNamespace('storagr')
+#1 C:/laragon/www/seni_POS/vendor/symfony/console/Application.php(298): Symfony/Component/Console/Application->find('storagr:link')
+#2 C:/laragon/www/seni_POS/vendor/symfony/console/Application.php(195): Symfony/Component/Console/Application->doRun(Object(Symfony/Component/Console/Input/ArgvInput), Object(Symfony/Component/Console/Output/ConsoleOutput))
+#3 C:/laragon/www/seni_POS/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(198): Symfony/Component/Console/Application->run(Object(Symfony/Component/Console/Input/ArgvInput), Object(Symfony/Component/Console/Output/ConsoleOutput))
+#4 C:/laragon/www/seni_POS/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1235): Illuminate/Foundation/Console/Kernel->handle(Object(Symfony/Component/Console/Input/ArgvInput), Object(Symfony/Component/Console/Output/ConsoleOutput))
+#5 C:/laragon/www/seni_POS/artisan(16): Illuminate/Foundation/Application->handleCommand(Object(Symfony/Component/Console/Input/ArgvInput))
+#6 {main}
+"} 
