@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('produk', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users', 'id')->onDelete('cascade');
-            $table->foreignId('jenis_id')->constrained('jenis', 'id')->onDelete('restrtct');
+            $table->foreignId('jenis_id')->constrained('jenis', 'id')->onDelete('restrict');
             $table->string('foto');
             $table->string('nama');
             $table->integer('harga_beli');
