@@ -11,4 +11,9 @@ class Jenis extends Model
 
     protected $table = 'jenis';
     protected $fillable = ['nama_jenis'];
+
+    public function produk()
+    {
+        return $this->hasMany(Produk::class, 'jenis_id');
+    }
 }

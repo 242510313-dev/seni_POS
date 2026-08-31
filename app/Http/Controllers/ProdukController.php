@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Produk\StoreRequest;
 use App\Http\Requests\Produk\UpdateRequest;
 use App\Http\Requests\SearchRequest;
+use App\Models\Jenis;
 use App\Models\Produk;
 use App\Models\ItemPenjualan;
 use Illuminate\Http\Request;
@@ -21,14 +22,15 @@ class ProdukController extends Controller
       $keyword = $request->input('search');
 
       if ($keyword) {
-    $products = Produk::when($keyword, function ($query) use ($keyword) {
-        $query->where('nama', 'like', '%' . $keyword . '%');
-    })
-    ->orderBy('nama')
-    ->paginate(10)
-    ->withQueryString();
+    $products = Produk::with(['user', 'jenis'])
+        ->when($keyword, function ($query) use ($keyword) {
+            $query->where('nama', 'like', '%' . $keyword . '%');
+        })
+        ->orderBy('nama')
+        ->paginate(10)
+        ->withQueryString();
 } else {
-    $products = Produk::latest()->paginate(10)->withQueryString();
+    $products = Produk::with(['user', 'jenis'])->latest()->paginate(10)->withQueryString();
 }
  return view('produk.index', compact('products'));
     }
@@ -38,7 +40,9 @@ class ProdukController extends Controller
      */
     public function create()
     {
-        return view('produk.create');
+        $jenis = Jenis::orderBy('nama_jenis')->get();
+
+        return view('produk.create', compact('jenis'));
     }
 
     /**
@@ -49,6 +53,7 @@ class ProdukController extends Controller
           $dataReq = $request->validated();
 
 $data['user_id'] = Auth::id();
+$data['jenis_id'] = $dataReq['jenis_id'];
 $data['nama'] = $dataReq['name'];
 $data['harga_beli'] = $dataReq['purchase_price'];
 $data['harga_jual'] = $dataReq['selling_price'];
@@ -77,7 +82,9 @@ return redirect()->route('produk.index')
      */
     public function edit(Produk $produk)
 {
-    return view('produk.edit', compact('produk'));
+    $jenis = Jenis::orderBy('nama_jenis')->get();
+
+    return view('produk.edit', compact('produk', 'jenis'));
 }
 
     /**
@@ -89,6 +96,7 @@ return redirect()->route('produk.index')
 
     $data = [
         'user_id' => Auth::id(),
+        'jenis_id' => $dataReq['jenis_id'],
         'nama' => $dataReq['name'],
         'harga_beli' => $dataReq['purchase_price'],
         'harga_jual' => $dataReq['selling_price'],

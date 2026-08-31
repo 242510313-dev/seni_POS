@@ -305,6 +305,10 @@
                     </th>
 
                     <th>
+                        Jenis
+                    </th>
+
+                    <th>
                         Harga Beli
                     </th>
 
@@ -379,6 +383,13 @@
                         </td>
 
 
+                        {{-- JENIS --}}
+                        <td>
+
+                            {{ $product->jenis->nama_jenis ?? '-' }}
+
+                        </td>
+
                         {{-- HARGA BELI --}}
                         <td class="harga">
 
@@ -444,7 +455,7 @@
 
                     <tr>
 
-                        <td colspan="8"
+                        <td colspan="9"
                             class="text-center empty-data">
 
                             <i class="bi bi-box-seam"

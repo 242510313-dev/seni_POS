@@ -24,6 +24,7 @@ class StoreRequest extends FormRequest
 {
     return [
         'foto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+        'jenis_id' => 'required|exists:jenis,id',
         'name' => 'required|string|max:255',
         'purchase_price' => 'required|integer|min:0',
         'selling_price' => 'required|integer|min:0',
@@ -37,6 +38,8 @@ public function messages(): array
         'foto.image' => 'File yang diupload harus gambar.',
         'foto.mimes' => 'Ekstensi gambar harus JPG, JPEG, PNG.',
         'foto.max' => 'Maksimal ukuran gambar 2MB.',
+        'jenis_id.required' => 'Jenis produk wajib dipilih.',
+        'jenis_id.exists' => 'Jenis produk yang dipilih tidak valid.',
         'name.required' => 'Nama wajib diisi.',
         'email.email' => 'Format email tidak valid.',
         'purchase_price.required' => 'Purchase price wajib diisi.',

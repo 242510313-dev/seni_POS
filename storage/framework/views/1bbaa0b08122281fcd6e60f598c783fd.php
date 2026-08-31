@@ -305,6 +305,10 @@
                     </th>
 
                     <th>
+                        Jenis
+                    </th>
+
+                    <th>
                         Harga Beli
                     </th>
 
@@ -383,6 +387,14 @@
 
 
                         
+                        <td>
+
+                            <?php echo e($product->jenis->nama_jenis ?? '-'); ?>
+
+
+                        </td>
+
+                        
                         <td class="harga">
 
                             <?php echo e(number_format($product->harga_beli, 0, ',', '.')); ?>
@@ -450,7 +462,7 @@
 
                     <tr>
 
-                        <td colspan="8"
+                        <td colspan="9"
                             class="text-center empty-data">
 
                             <i class="bi bi-box-seam"
