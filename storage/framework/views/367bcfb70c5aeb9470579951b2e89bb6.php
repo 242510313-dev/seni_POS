@@ -150,21 +150,21 @@
     <div class="container-fluid">
 
         
-        <a class="navbar-brand"
-           href="<?php echo e(route('dashboard')); ?>">
+      
+<a class="navbar-brand"
+   href="<?php echo e(route('sejarah.visimisi')); ?>"> 
+    <span class="brand-icon">
+        🥐
+    </span>
 
-            <span class="brand-icon">
-                🥐
-            </span>
+    <span class="brand-text">
+        Midori Bakery
+        <span class="brand-subtitle">
+            Bakery & Tea
+        </span>
+    </span>
 
-            <span class="brand-text">
-                Midori Bakery
-                <span class="brand-subtitle">
-                    Bakery & Tea
-                </span>
-            </span>
-
-        </a>
+</a>
 
 
         

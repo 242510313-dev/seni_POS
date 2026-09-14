@@ -104,9 +104,9 @@
                     <tr>
                         <th>Produk</th>
                         <th>Harga</th>
-                        <th >Qty</th>
+                        <th>Qty</th>
                         <th>Subtotal</th>
-                        <th >Aksi</th>
+                        <th>Aksi</th>
                     </tr>
                 </thead>
 
@@ -114,34 +114,33 @@
 
                     @forelse($sale->itemPenjualan as $item)
                     <tr>
-
                         {{-- NAMA --}}
-                        <td>  {{ $item->produk->nama }} </td>
+                        <td>{{ $item->produk->nama }}</td>
                         <td>Rp. {{ number_format($item->produk->harga_jual) }}</td>
                         <td>
                             <form method="POST" action="{{ route('itempenjualan.update', $item->id) }}">
                                 @csrf  @method('PUT')
                                 <input type="number" name="quantity"
                                        value="{{ $item->kuantitas }}" min="1"
-                                       class="form-control form-control-sm">
+                                       class="form-control form-control-sm"
+                                       onchange="this.form.submit()">
                             </form>
                         </td>
-
                         <td>
                             Rp {{ number_format($item->subtotal) }}
                         </td>
                         <td>
                             @can('delete', $item)
                             <form method="POST" action="{{ route('itempenjualan.destroy', $item->id) }}">
-                                @csrf   @method('DELETE')
-                                 <button class="btn btn-danger btn-sm">Hapus</button>
+                                @csrf  @method('DELETE')
+                                <button class="btn btn-danger btn-sm">Hapus</button>
                             </form>
                             @endcan
                         </td>
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="4" class="text-center">
+                        <td colspan="5" class="text-center">
                             Keranjang masih kosong
                         </td>
                     </tr>
@@ -158,12 +157,15 @@
                 </strong>
 
                 <form method="POST"
-      action="{{ route('penjualan.update', $sale->id) }}"
-      onsubmit="return confirm('Yakin ingin checkout?')" class="mt-2">
-    
-    @csrf  @method('PUT')
+                      action="{{ route('penjualan.update', $sale->id) }}"
+                      onsubmit="return confirm('Yakin ingin checkout?')" class="mt-2">
+                
+                    @csrf  @method('PUT')
+                    
                     <select name="payment_method"
-                            class="form-select mb-2">
+                            id="payment_method"
+                            class="form-select mb-2"
+                            onchange="handlePaymentMethodChange(this.value)">
 
                         <option value="">
                             Pilih Pembayaran
@@ -179,26 +181,88 @@
 
                     </select>
 
+                    {{-- BAGIAN CASH: INPUT NOMINAL & KEMBALIAN --}}
+                    <div id="cash-section" class="mb-2" style="display: none;">
+                        <label class="form-label mb-1">Jumlah Uang Tunai</label>
+                        <input type="number" 
+                               name="cash_amount" 
+                               id="cash_amount" 
+                               class="form-control mb-2" 
+                               placeholder="Masukkan nominal uang"
+                               oninput="calculateChange({{ $sale->total_pembayaran }})">
+                        
+                        <div class="alert alert-info py-2 mb-0">
+                            Kembalian: <strong id="change-amount">Rp 0</strong>
+                        </div>
+                    </div>
+
+                    {{-- BAGIAN QRIS: TAMPILAN BARCODE --}}
+                    <div id="qris-section" class="mb-2 text-center" style="display: none;">
+                        <label class="form-label mb-1">Scan Barcode QRIS</label>
+                        <div class="p-2 bg-white border rounded d-inline-block">
+                            <img src="https://via.placeholder.com/150?text=QRIS+Barcode" 
+                                 alt="Barcode QRIS" 
+                                 class="img-fluid" 
+                                 style="max-width: 150px; height: auto;">
+                        </div>
+                        <small class="d-block text-muted mt-1">Silakan scan menggunakan e-wallet / m-banking</small>
+                    </div>
+
                     <button class="btn btn-success w-100 {{ $sale->status === 'COMPLETED' ? 'disabled' : '' }}">
-                    Checkout
+                        Checkout
                     </button>
                 </form>
+
                 @can('delete', $sale)
                 <form action="{{ route('penjualan.destroy', $sale->id) }}"
-      method="POST"
-      onsubmit="return confirm('Yakin ingin membatalkan transaksi?')">
-    @csrf
-    @method('DELETE')
+                      method="POST"
+                      onsubmit="return confirm('Yakin ingin membatalkan transaksi?')">
+                    @csrf
+                    @method('DELETE')
 
-    <button class="btn btn-outline-danger w-100 mt-2 {{ $sale->status === 'COMPLETED' ? 'disabled' : '' }}">
-        Batalkan Transaksi
-    </button>
-</form>
-               @endcan
+                    <button class="btn btn-outline-danger w-100 mt-2 {{ $sale->status === 'COMPLETED' ? 'disabled' : '' }}">
+                        Batalkan Transaksi
+                    </button>
+                </form>
+                @endcan
+
             </div>
         </div>
     </div>
 
 </div>
+
+{{-- SCRIPT JAVASCRIPT --}}
+<script>
+function handlePaymentMethodChange(val) {
+    const cashSection = document.getElementById('cash-section');
+    const qrisSection = document.getElementById('qris-section');
+
+    if (val === 'CASH') {
+        cashSection.style.display = 'block';
+        qrisSection.style.display = 'none';
+    } else if (val === 'QRIS') {
+        qrisSection.style.display = 'block';
+        cashSection.style.display = 'none';
+    } else {
+        cashSection.style.display = 'none';
+        qrisSection.style.display = 'none';
+    }
+}
+
+function calculateChange(totalPembayaran) {
+    const cashInput = document.getElementById('cash_amount').value;
+    const changeDisplay = document.getElementById('change-amount');
+    
+    const cash = parseFloat(cashInput) || 0;
+    const change = cash - totalPembayaran;
+
+    if (change >= 0) {
+        changeDisplay.innerText = 'Rp ' + new Intl.NumberFormat('id-ID').format(change);
+    } else {
+        changeDisplay.innerText = 'Uang kurang';
+    }
+}
+</script>
 
 @endsection

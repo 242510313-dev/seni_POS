@@ -361,7 +361,7 @@
 
         <div>
             <div class="welcome-small">
-                ✨ &nbsp; Selamat Datang di VeggieGo
+                ✨ &nbsp; Selamat Datang di Midori Bakery
             </div>
 
             <div class="welcome-title">

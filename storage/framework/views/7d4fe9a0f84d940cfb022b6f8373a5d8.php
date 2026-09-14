@@ -11,7 +11,7 @@
     <div class="receipt">
 
         <div class="text-center">
-            <h4 class="fw-bold mb-1">POS SENI</h4>
+            <h4 class="fw-bold mb-1">MIDORI BAKERY</h4>
             <div>STRUK PEMBAYARAN</div>
             <hr>
         </div>

@@ -152,21 +152,23 @@
         {{-- =========================
              BRAND
         ========================= --}}
-        <a class="navbar-brand"
-           href="{{ route('dashboard') }}">
+      {{-- =========================
+     BRAND
+========================= --}}
+<a class="navbar-brand"
+   href="{{ route('sejarah.visimisi') }}"> 
+    <span class="brand-icon">
+        🥐
+    </span>
 
-            <span class="brand-icon">
-                🥐
-            </span>
+    <span class="brand-text">
+        Midori Bakery
+        <span class="brand-subtitle">
+            Bakery & Tea
+        </span>
+    </span>
 
-            <span class="brand-text">
-                Midori Bakery
-                <span class="brand-subtitle">
-                    Bakery & Tea
-                </span>
-            </span>
-
-        </a>
+</a>
 
 
         {{-- =========================

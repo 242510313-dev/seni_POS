@@ -25,6 +25,13 @@ Route::middleware('auth')->group(function () {
         return view('tentang'); // Mengarahkan ke file resources/views/tentang.blade.php
     })->name('tentang');
 
+    // ==========================================
+    // ROUTE BARU: PROFIL SEJARAH & VISI MISI
+    // ==========================================
+    Route::get('/sejarah-visi-misi', function () {
+        return view('sejarah-visi-misi'); // Mengarahkan ke file resources/views/sejarah-visi-misi.blade.php
+    })->name('sejarah.visimisi');
+
     Route::middleware('role:admin')->prefix('admin')->name('admin.')->group(function () {
         Route::get('/users', [UserController::class, 'index'])->name('users');
         Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
