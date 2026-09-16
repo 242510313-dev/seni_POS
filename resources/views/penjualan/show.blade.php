@@ -79,6 +79,22 @@
             <span>{{ $penjualan->metode_pembayaran }}</span>
         </div>
 
+        @if($penjualan->metode_pembayaran === 'CASH')
+            <div class="d-flex justify-content-between">
+                <span>Uang Diterima</span>
+                <span>
+                    Rp {{ number_format($penjualan->cash_amount ?? 0, 0, ',', '.') }}
+                </span>
+            </div>
+
+            <div class="d-flex justify-content-between fw-bold">
+                <span>Kembalian</span>
+                <span>
+                    Rp {{ number_format($penjualan->change_amount ?? 0, 0, ',', '.') }}
+                </span>
+            </div>
+        @endif
+
         <div class="d-flex justify-content-between">
             <span>Status</span>
             <span>{{ $penjualan->status }}</span>

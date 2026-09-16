@@ -116,8 +116,9 @@ return view('penjualan.pos', compact('sale', 'products', 'mode'));
      */
     public function update(Request $request, Penjualan $penjualan)
 {
-    $request->validate([
-        'payment_method' => 'required|in:CASH,QRIS'
+    $validated = $request->validate([
+        'payment_method' => 'required|in:CASH,QRIS',
+        'cash_amount' => 'nullable|required_if:payment_method,CASH|integer|min:0',
     ]);
 
     if ($penjualan->status !== 'OPEN') {
@@ -128,20 +129,33 @@ return view('penjualan.pos', compact('sale', 'products', 'mode'));
         return back()->with('errors', 'Keranjang masih kosong');
     }
 
-    DB::transaction(function () use ($penjualan, $request) {
+    $total = (int) $penjualan->itemPenjualan()->sum('subtotal');
+    $cashAmount = $validated['payment_method'] === 'CASH'
+        ? (int) $validated['cash_amount']
+        : null;
+
+    if ($cashAmount !== null && $cashAmount < $total) {
+        return back()
+            ->withInput()
+            ->with('errors', 'Jumlah uang tunai kurang dari total pembayaran.');
+    }
+
+    $changeAmount = $cashAmount !== null ? $cashAmount - $total : null;
+
+    DB::transaction(function () use ($penjualan, $validated, $total, $cashAmount, $changeAmount) {
 
         // Hitung ulang total (anti manipulasi)
-        $total = $penjualan->itemPenjualan()->sum('subtotal');
-
         $penjualan->update([
-            'metode_pembayaran' => $request->payment_method,
+            'metode_pembayaran' => $validated['payment_method'],
             'total_pembayaran'  => $total,
+            'cash_amount'       => $cashAmount,
+            'change_amount'     => $changeAmount,
             'status'            => 'COMPLETED'
         ]);
     });
 
     return redirect()
-        ->route('penjualan.index')
+        ->route('penjualan.show', $penjualan)
         ->with('success', 'Transaksi berhasil diselesaikan');
 }
     /**

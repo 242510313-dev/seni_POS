@@ -381,8 +381,6 @@
     </div>
 
 
-    @can('viewAny', App\Models\User::class)
-
     {{-- =========================
          PENJUALAN HARI INI
     ========================= --}}
@@ -557,9 +555,6 @@
         </div>
 
     </div>
-
-    @endcan
-
 
     {{-- =========================
          STATUS PERSEDIAAN

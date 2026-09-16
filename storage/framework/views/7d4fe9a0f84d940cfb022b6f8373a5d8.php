@@ -85,6 +85,24 @@
             <span><?php echo e($penjualan->metode_pembayaran); ?></span>
         </div>
 
+        <?php if($penjualan->metode_pembayaran === 'CASH'): ?>
+            <div class="d-flex justify-content-between">
+                <span>Uang Diterima</span>
+                <span>
+                    Rp <?php echo e(number_format($penjualan->cash_amount ?? 0, 0, ',', '.')); ?>
+
+                </span>
+            </div>
+
+            <div class="d-flex justify-content-between fw-bold">
+                <span>Kembalian</span>
+                <span>
+                    Rp <?php echo e(number_format($penjualan->change_amount ?? 0, 0, ',', '.')); ?>
+
+                </span>
+            </div>
+        <?php endif; ?>
+
         <div class="d-flex justify-content-between">
             <span>Status</span>
             <span><?php echo e($penjualan->status); ?></span>

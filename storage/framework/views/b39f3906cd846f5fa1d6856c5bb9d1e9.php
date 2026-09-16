@@ -379,6 +379,32 @@
 
     <?php endif; ?>
 
+    <?php if(session('error_message')): ?>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+            <?php echo e(session('error_message')); ?>
+
+            <button type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert"
+                    aria-label="Close">
+            </button>
+        </div>
+    <?php endif; ?>
+
+    <?php if($errors->any()): ?>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+            <?php echo e($errors->first()); ?>
+
+            <button type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert"
+                    aria-label="Close">
+            </button>
+        </div>
+    <?php endif; ?>
+
 
     
     <div class="jenis-card">
@@ -488,94 +514,6 @@
                     </tr>
 
 
-                    
-                    <div class="modal fade"
-                         id="modalEditJenis<?php echo e($item->id); ?>"
-                         tabindex="-1"
-                         aria-labelledby="modalEditJenisLabel<?php echo e($item->id); ?>"
-                         aria-hidden="true">
-
-                        <div class="modal-dialog modal-dialog-centered">
-
-                            <div class="modal-content custom-modal">
-
-                                <div class="modal-header custom-modal-header">
-
-                                    <h5 class="modal-title custom-modal-title"
-                                        id="modalEditJenisLabel<?php echo e($item->id); ?>">
-
-                                        <i class="bi bi-pencil-square me-2"></i>
-                                        Edit Jenis Produk
-
-                                    </h5>
-
-                                    <button type="button"
-                                            class="btn-close btn-close-white"
-                                            data-bs-dismiss="modal"
-                                            aria-label="Close">
-                                    </button>
-
-                                </div>
-
-
-                                <form action="<?php echo e(route('jenis.update', $item->id)); ?>"
-                                      method="POST">
-
-                                    <?php echo csrf_field(); ?>
-                                    <?php echo method_field('PUT'); ?>
-
-                                    <div class="custom-modal-body">
-
-                                        <div class="mb-3">
-
-                                            <label for="nama_jenis_<?php echo e($item->id); ?>"
-                                                   class="form-label-custom">
-
-                                                Nama Jenis
-
-                                            </label>
-
-                                            <input type="text"
-                                                   class="form-control custom-input"
-                                                   id="nama_jenis_<?php echo e($item->id); ?>"
-                                                   name="nama_jenis"
-                                                   value="<?php echo e(old('nama_jenis', $item->nama_jenis)); ?>"
-                                                   placeholder="Masukkan nama jenis..."
-                                                   required>
-
-                                        </div>
-
-                                    </div>
-
-
-                                    <div class="modal-footer custom-modal-footer">
-
-                                        <button type="button"
-                                                class="btn btn-batal"
-                                                data-bs-dismiss="modal">
-
-                                            Batal
-
-                                        </button>
-
-                                        <button type="submit"
-                                                class="btn btn-simpan">
-
-                                            <i class="bi bi-check-lg me-1"></i>
-                                            Simpan Perubahan
-
-                                        </button>
-
-                                    </div>
-
-                                </form>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
 
                     <tr>
@@ -610,6 +548,57 @@
     </div>
 
 </div>
+
+
+<?php $__currentLoopData = $jenis; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+    <div class="modal fade"
+         id="modalEditJenis<?php echo e($item->id); ?>"
+         tabindex="-1"
+         aria-labelledby="modalEditJenisLabel<?php echo e($item->id); ?>"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content custom-modal">
+                <div class="modal-header custom-modal-header">
+                    <h5 class="modal-title custom-modal-title"
+                        id="modalEditJenisLabel<?php echo e($item->id); ?>">
+                        <i class="bi bi-pencil-square me-2"></i>
+                        Edit Jenis Produk
+                    </h5>
+                    <button type="button"
+                            class="btn-close btn-close-white"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                </div>
+
+                <form action="<?php echo e(route('jenis.update', $item)); ?>" method="POST">
+                    <?php echo csrf_field(); ?>
+                    <?php echo method_field('PUT'); ?>
+                    <div class="custom-modal-body">
+                        <label for="nama_jenis_<?php echo e($item->id); ?>" class="form-label-custom">
+                            Nama Jenis
+                        </label>
+                        <input type="text"
+                               class="form-control custom-input"
+                               id="nama_jenis_<?php echo e($item->id); ?>"
+                               name="nama_jenis"
+                               value="<?php echo e(old('nama_jenis', $item->nama_jenis)); ?>"
+                               placeholder="Masukkan nama jenis..."
+                               required>
+                    </div>
+                    <div class="modal-footer custom-modal-footer">
+                        <button type="button" class="btn btn-batal" data-bs-dismiss="modal">
+                            Batal
+                        </button>
+                        <button type="submit" class="btn btn-simpan">
+                            <i class="bi bi-check-lg me-1"></i>
+                            Simpan Perubahan
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
 
 

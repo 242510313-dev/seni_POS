@@ -16,8 +16,18 @@ class Penjualan extends Model
         'user_id',
         'total_pembayaran',
         'metode_pembayaran',
+        'cash_amount',
+        'change_amount',
         'status'
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'cash_amount' => 'integer',
+            'change_amount' => 'integer',
+        ];
+    }
 
     public function user()
     {

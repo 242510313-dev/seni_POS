@@ -382,6 +382,30 @@
 
     @endif
 
+    @if(session('error_message'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+            {{ session('error_message') }}
+            <button type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert"
+                    aria-label="Close">
+            </button>
+        </div>
+    @endif
+
+    @if($errors->any())
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+            {{ $errors->first() }}
+            <button type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert"
+                    aria-label="Close">
+            </button>
+        </div>
+    @endif
+
 
     {{-- =========================
          TABLE CARD
@@ -491,96 +515,6 @@
                     </tr>
 
 
-                    {{-- =========================
-                         MODAL EDIT
-                    ========================= --}}
-                    <div class="modal fade"
-                         id="modalEditJenis{{ $item->id }}"
-                         tabindex="-1"
-                         aria-labelledby="modalEditJenisLabel{{ $item->id }}"
-                         aria-hidden="true">
-
-                        <div class="modal-dialog modal-dialog-centered">
-
-                            <div class="modal-content custom-modal">
-
-                                <div class="modal-header custom-modal-header">
-
-                                    <h5 class="modal-title custom-modal-title"
-                                        id="modalEditJenisLabel{{ $item->id }}">
-
-                                        <i class="bi bi-pencil-square me-2"></i>
-                                        Edit Jenis Produk
-
-                                    </h5>
-
-                                    <button type="button"
-                                            class="btn-close btn-close-white"
-                                            data-bs-dismiss="modal"
-                                            aria-label="Close">
-                                    </button>
-
-                                </div>
-
-
-                                <form action="{{ route('jenis.update', $item->id) }}"
-                                      method="POST">
-
-                                    @csrf
-                                    @method('PUT')
-
-                                    <div class="custom-modal-body">
-
-                                        <div class="mb-3">
-
-                                            <label for="nama_jenis_{{ $item->id }}"
-                                                   class="form-label-custom">
-
-                                                Nama Jenis
-
-                                            </label>
-
-                                            <input type="text"
-                                                   class="form-control custom-input"
-                                                   id="nama_jenis_{{ $item->id }}"
-                                                   name="nama_jenis"
-                                                   value="{{ old('nama_jenis', $item->nama_jenis) }}"
-                                                   placeholder="Masukkan nama jenis..."
-                                                   required>
-
-                                        </div>
-
-                                    </div>
-
-
-                                    <div class="modal-footer custom-modal-footer">
-
-                                        <button type="button"
-                                                class="btn btn-batal"
-                                                data-bs-dismiss="modal">
-
-                                            Batal
-
-                                        </button>
-
-                                        <button type="submit"
-                                                class="btn btn-simpan">
-
-                                            <i class="bi bi-check-lg me-1"></i>
-                                            Simpan Perubahan
-
-                                        </button>
-
-                                    </div>
-
-                                </form>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
                 @empty
 
                     <tr>
@@ -615,6 +549,57 @@
     </div>
 
 </div>
+
+{{-- Modal edit diletakkan di luar tabel agar struktur HTML valid. --}}
+@foreach ($jenis as $item)
+    <div class="modal fade"
+         id="modalEditJenis{{ $item->id }}"
+         tabindex="-1"
+         aria-labelledby="modalEditJenisLabel{{ $item->id }}"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content custom-modal">
+                <div class="modal-header custom-modal-header">
+                    <h5 class="modal-title custom-modal-title"
+                        id="modalEditJenisLabel{{ $item->id }}">
+                        <i class="bi bi-pencil-square me-2"></i>
+                        Edit Jenis Produk
+                    </h5>
+                    <button type="button"
+                            class="btn-close btn-close-white"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                </div>
+
+                <form action="{{ route('jenis.update', $item) }}" method="POST">
+                    @csrf
+                    @method('PUT')
+                    <div class="custom-modal-body">
+                        <label for="nama_jenis_{{ $item->id }}" class="form-label-custom">
+                            Nama Jenis
+                        </label>
+                        <input type="text"
+                               class="form-control custom-input"
+                               id="nama_jenis_{{ $item->id }}"
+                               name="nama_jenis"
+                               value="{{ old('nama_jenis', $item->nama_jenis) }}"
+                               placeholder="Masukkan nama jenis..."
+                               required>
+                    </div>
+                    <div class="modal-footer custom-modal-footer">
+                        <button type="button" class="btn btn-batal" data-bs-dismiss="modal">
+                            Batal
+                        </button>
+                        <button type="submit" class="btn btn-simpan">
+                            <i class="bi bi-check-lg me-1"></i>
+                            Simpan Perubahan
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+@endforeach
 
 
 {{-- =========================

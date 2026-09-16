@@ -380,8 +380,6 @@
     </div>
 
 
-    <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('viewAny', App\Models\User::class)): ?>
-
     
     <div class="section-header">
 
@@ -556,9 +554,6 @@
         </div>
 
     </div>
-
-    <?php endif; ?>
-
 
     
     <div class="section-header mt-4">

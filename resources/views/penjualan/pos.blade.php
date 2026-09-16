@@ -200,10 +200,12 @@
                     <div id="qris-section" class="mb-2 text-center" style="display: none;">
                         <label class="form-label mb-1">Scan Barcode QRIS</label>
                         <div class="p-2 bg-white border rounded d-inline-block">
-                            <img src="https://via.placeholder.com/150?text=QRIS+Barcode" 
-                                 alt="Barcode QRIS" 
-                                 class="img-fluid" 
-                                 style="max-width: 150px; height: auto;">
+                            @php
+                                $qrisPayload = config('services.qris.payload')
+                                    ?: 'SENI POS|TRANSAKSI=' . $sale->id . '|TOTAL=' . $sale->total_pembayaran;
+                            @endphp
+                            <canvas data-qris-payload="{{ $qrisPayload }}"
+                                    aria-label="Barcode QRIS transaksi {{ $sale->id }}"></canvas>
                         </div>
                         <small class="d-block text-muted mt-1">Silakan scan menggunakan e-wallet / m-banking</small>
                     </div>
