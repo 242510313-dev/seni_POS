@@ -70,6 +70,13 @@
 
         <hr>
 
+        <?php if(($penjualan->discount_percentage ?? 0) > 0): ?>
+            <div class="d-flex justify-content-between">
+                <span>Diskon <?php echo e($penjualan->discount_percentage); ?>%</span>
+                <span>- Rp <?php echo e(number_format($penjualan->discount_amount ?? 0, 0, ',', '.')); ?></span>
+            </div>
+        <?php endif; ?>
+
         
         <div class="d-flex justify-content-between fw-bold fs-5">
             <span>TOTAL</span>

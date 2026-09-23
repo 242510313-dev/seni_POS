@@ -15,6 +15,8 @@ class Penjualan extends Model
     protected $fillable = [
         'user_id',
         'total_pembayaran',
+        'discount_percentage',
+        'discount_amount',
         'metode_pembayaran',
         'cash_amount',
         'change_amount',
@@ -26,6 +28,8 @@ class Penjualan extends Model
         return [
             'cash_amount' => 'integer',
             'change_amount' => 'integer',
+            'discount_percentage' => 'integer',
+            'discount_amount' => 'integer',
         ];
     }
 

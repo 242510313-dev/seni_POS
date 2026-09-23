@@ -61,6 +61,7 @@
     .badge {
         margin-top: 5px;
     }
+
 </style>
 
 <div class="card login-card text-center position-absolute top-50 start-50 translate-middle">

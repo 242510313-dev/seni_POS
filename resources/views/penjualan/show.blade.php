@@ -65,6 +65,13 @@
 
         <hr>
 
+        @if(($penjualan->discount_percentage ?? 0) > 0)
+            <div class="d-flex justify-content-between">
+                <span>Diskon {{ $penjualan->discount_percentage }}%</span>
+                <span>- Rp {{ number_format($penjualan->discount_amount ?? 0, 0, ',', '.') }}</span>
+            </div>
+        @endif
+
         {{-- Total --}}
         <div class="d-flex justify-content-between fw-bold fs-5">
             <span>TOTAL</span>

@@ -153,7 +153,7 @@
             <div class="card-footer">
 
                 <strong>
-                    Total: Rp {{ number_format($sale->total_pembayaran) }}
+                    Total: Rp <span id="total-display">{{ number_format($sale->total_pembayaran) }}</span>
                 </strong>
 
                 <form method="POST"
@@ -181,6 +181,21 @@
 
                     </select>
 
+                    <label for="discount_percentage" class="form-label mb-1">Diskon</label>
+                    <select name="discount_percentage"
+                            id="discount_percentage"
+                            class="form-select mb-2"
+                            onchange="calculateDiscount()">
+                        <option value="0">Tanpa Diskon</option>
+                        <option value="5">Diskon 5%</option>
+                        <option value="10">Diskon 10%</option>
+                        <option value="15">Diskon 15%</option>
+                    </select>
+
+                    <div class="alert alert-success py-2 mb-2">
+                        Diskon: <strong id="discount-amount">Rp 0</strong>
+                    </div>
+
                     {{-- BAGIAN CASH: INPUT NOMINAL & KEMBALIAN --}}
                     <div id="cash-section" class="mb-2" style="display: none;">
                         <label class="form-label mb-1">Jumlah Uang Tunai</label>
@@ -189,7 +204,7 @@
                                id="cash_amount" 
                                class="form-control mb-2" 
                                placeholder="Masukkan nominal uang"
-                               oninput="calculateChange({{ $sale->total_pembayaran }})">
+                               oninput="calculateChange()">
                         
                         <div class="alert alert-info py-2 mb-0">
                             Kembalian: <strong id="change-amount">Rp 0</strong>
@@ -252,7 +267,18 @@ function handlePaymentMethodChange(val) {
     }
 }
 
-function calculateChange(totalPembayaran) {
+function calculateDiscount() {
+    const baseTotal = {{ $sale->itemPenjualan->sum('subtotal') }};
+    const discountPercentage = Number(document.getElementById('discount_percentage').value) || 0;
+    const discountAmount = Math.round(baseTotal * discountPercentage / 100);
+    const finalTotal = baseTotal - discountAmount;
+
+    document.getElementById('discount-amount').innerText = 'Rp ' + new Intl.NumberFormat('id-ID').format(discountAmount);
+    document.getElementById('total-display').innerText = new Intl.NumberFormat('id-ID').format(finalTotal);
+    calculateChange(finalTotal);
+}
+
+function calculateChange(totalPembayaran = {{ $sale->total_pembayaran }}) {
     const cashInput = document.getElementById('cash_amount').value;
     const changeDisplay = document.getElementById('change-amount');
     
@@ -265,6 +291,8 @@ function calculateChange(totalPembayaran) {
         changeDisplay.innerText = 'Uang kurang';
     }
 }
+
+calculateDiscount();
 </script>
 
 @endsection

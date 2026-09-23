@@ -113,6 +113,7 @@ unset($__errorArgs, $__bag); ?>
 <div>
     <label>Harga Beli</label><br>
     <input type="number" name="purchase_price"
+        id="purchase_price"
         class="form-control <?php $__errorArgs = ['purchase_price'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -138,8 +139,17 @@ unset($__errorArgs, $__bag); ?>
 </div>
 
 <div>
+    <label>Laba (30%)</label><br>
+    <input type="number" id="profit_amount"
+        class="form-control"
+        value="<?php echo e(old('purchase_price', $produk->harga_beli ?? '') ? round((old('purchase_price', $produk->harga_beli ?? 0) * 30) / 100) : ''); ?>"
+        readonly>
+</div>
+
+<div>
     <label>Harga Jual</label><br>
     <input type="number" name="selling_price"
+        id="selling_price"
         class="form-control <?php $__errorArgs = ['selling_price'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -195,6 +205,21 @@ unset($__errorArgs, $__bag); ?>
 <button class="btn btn-success mt-3" type="submit">Simpan</button>
 
 <script>
+const purchasePriceInput = document.getElementById('purchase_price');
+const profitAmountInput = document.getElementById('profit_amount');
+const sellingPriceInput = document.getElementById('selling_price');
+
+function calculateProfit() {
+    const purchasePrice = Number(purchasePriceInput.value) || 0;
+    const profitAmount = Math.round(purchasePrice * 30 / 100);
+
+    profitAmountInput.value = purchasePrice > 0 ? profitAmount : '';
+    sellingPriceInput.value = purchasePrice > 0 ? purchasePrice + profitAmount : '';
+}
+
+purchasePriceInput.addEventListener('input', calculateProfit);
+calculateProfit();
+
 function previewImage(input) {
     const preview = document.getElementById('preview');
     const file = input.files[0];

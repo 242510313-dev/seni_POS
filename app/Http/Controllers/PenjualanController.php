@@ -118,6 +118,7 @@ return view('penjualan.pos', compact('sale', 'products', 'mode'));
 {
     $validated = $request->validate([
         'payment_method' => 'required|in:CASH,QRIS',
+        'discount_percentage' => 'required|integer|in:0,5,10,15',
         'cash_amount' => 'nullable|required_if:payment_method,CASH|integer|min:0',
     ]);
 
@@ -129,7 +130,10 @@ return view('penjualan.pos', compact('sale', 'products', 'mode'));
         return back()->with('errors', 'Keranjang masih kosong');
     }
 
-    $total = (int) $penjualan->itemPenjualan()->sum('subtotal');
+    $subtotal = (int) $penjualan->itemPenjualan()->sum('subtotal');
+    $discountPercentage = (int) $validated['discount_percentage'];
+    $discountAmount = (int) round($subtotal * $discountPercentage / 100);
+    $total = $subtotal - $discountAmount;
     $cashAmount = $validated['payment_method'] === 'CASH'
         ? (int) $validated['cash_amount']
         : null;
@@ -142,12 +146,14 @@ return view('penjualan.pos', compact('sale', 'products', 'mode'));
 
     $changeAmount = $cashAmount !== null ? $cashAmount - $total : null;
 
-    DB::transaction(function () use ($penjualan, $validated, $total, $cashAmount, $changeAmount) {
+    DB::transaction(function () use ($penjualan, $validated, $total, $discountPercentage, $discountAmount, $cashAmount, $changeAmount) {
 
         // Hitung ulang total (anti manipulasi)
         $penjualan->update([
             'metode_pembayaran' => $validated['payment_method'],
             'total_pembayaran'  => $total,
+            'discount_percentage' => $discountPercentage,
+            'discount_amount' => $discountAmount,
             'cash_amount'       => $cashAmount,
             'change_amount'     => $changeAmount,
             'status'            => 'COMPLETED'
